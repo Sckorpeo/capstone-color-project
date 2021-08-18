@@ -1,5 +1,7 @@
 .Palette{
 height: 100vh;
+display: flex;
+flex-direction: column;
 }
 .Palette-colors{
     height: 90%;
@@ -11,5 +13,17 @@ height: 100vh;
 }
 .rc-slider-track{
     background-color: transparent;
-    
+
+}
+.Palette-footer{
+    background-color: white;
+    height: 4vh;
+    display: flex;
+    font-weight: bold;
+    align-items: center;
+    justify-content: flex-end;
+}
+.emoji{
+    font-size: 1.5rem;
+    margin: 0 1rem;
 }
