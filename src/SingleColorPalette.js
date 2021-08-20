@@ -5,24 +5,28 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import PaletteFooter from './PaletteFooter';
-import './Palette.css';
 
-
-class Palette extends Component {
+class SingleColorPalette extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            level: 500,
             format: 'hex',
             open: false
-        };
-        this.changeLevel = this.changeLevel.bind(this);
+        }
+        this._shades = this.gatherShades(this.props.palette, this.props.colorId);
         this.changeFormat = this.changeFormat.bind(this);
         this.closeSnackbar = this.closeSnackbar.bind(this);
+        console.log(this._shades)
     }
-    changeLevel(level) {
-        console.log(level)
-        this.setState({ level })
+    gatherShades(palette, color) {
+        let shades = [];
+        let allColors = palette.colors;
+        for (let key in allColors) {
+            shades = shades.concat(
+                allColors[key].filter(c => c.id === color)
+            )
+        }
+        return shades.slice(1);
     }
     changeFormat(evt) {
         this.setState({
@@ -35,26 +39,24 @@ class Palette extends Component {
             open: false
         })
     }
-
     render() {
-        const { colors, paletteName, emoji, id } = this.props.palette;
-        const { level, format, open } = this.state;
-        const colorBoxes = colors[level].map(color => {
+        const { format, open } = this.state;
+        const { paletteName, emoji } = this.props.palette;
+        const colorBoxes = this._shades.map(color => {
             return <ColorBox
-                background={color[format]}
+                key={color.name}
                 name={color.name}
-                id={color.id}
-                key={color.id}
-                paletteId={id}
-                moreToggle={true} />
-        });
+                background={color[format]}
+                moreToggle={false}
+            />
+        })
+
         return (
             <div className='Palette'>
-                <Navbar level={level}
-                    changeLevel={this.changeLevel}
-                    changeFormat={this.changeFormat}
+                <Navbar
                     format={format}
-                    sliderToggle
+                    changeFormat={this.changeFormat}
+                    sliderToggle={false}
                 />
                 <div className='Palette-colors'>
                     {colorBoxes}
@@ -79,9 +81,8 @@ class Palette extends Component {
                     ]}
                     onClose={this.closeSnackbar}
                 />
-            </div>
-        );
+            </div>);
     }
 }
 
-export default Palette;
+export default SingleColorPalette;

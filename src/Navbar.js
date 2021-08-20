@@ -1,24 +1,21 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Slider, { Range } from 'rc-slider';
+import Slider from 'rc-slider';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import 'rc-slider/assets/index.css';
 import './Navbar.css';
 
 class Navbar extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {}
-    }
+
     render() {
-        const { level, changeLevel, changeFormat, format } = this.props
+        const { level, changeLevel, changeFormat, format, sliderToggle } = this.props
         return (
             <nav className='Navbar'>
                 <div className='logo'>
                     <Link to='/'>reactcolorpicker</Link>
                 </div>
-                <div className='slider-container'>
+                {sliderToggle && <div className='slider-container'>
                     <span>Level: {level}</span>
                     <div className='slider'>
                         <Slider
@@ -36,7 +33,7 @@ class Navbar extends Component {
                             }}
                         />
                     </div>
-                </div>
+                </div>}
                 <div className='select-container'>
                     <Select onChange={changeFormat}
                         value={format}>
