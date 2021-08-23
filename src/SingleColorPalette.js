@@ -5,6 +5,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import PaletteFooter from './PaletteFooter';
+import { Link } from 'react-router-dom';
 
 class SingleColorPalette extends Component {
     constructor(props) {
@@ -41,7 +42,7 @@ class SingleColorPalette extends Component {
     }
     render() {
         const { format, open } = this.state;
-        const { paletteName, emoji } = this.props.palette;
+        const { paletteName, emoji, id } = this.props.palette;
         const colorBoxes = this._shades.map(color => {
             return <ColorBox
                 key={color.name}
@@ -52,7 +53,7 @@ class SingleColorPalette extends Component {
         })
 
         return (
-            <div className='Palette'>
+            <div className='SingleColorPalette Palette'>
                 <Navbar
                     format={format}
                     changeFormat={this.changeFormat}
@@ -60,6 +61,11 @@ class SingleColorPalette extends Component {
                 />
                 <div className='Palette-colors'>
                     {colorBoxes}
+                    <div className='go-back ColorBox'>
+                        <Link to={`/palette/${id}`}
+                            className='back-btn'
+                        >Go Back</Link>
+                    </div>
                 </div>
                 <PaletteFooter paletteName={paletteName} emoji={emoji} />
                 <Snackbar
