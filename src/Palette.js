@@ -46,7 +46,7 @@ class Palette extends Component {
                 id={color.id}
                 key={color.id}
                 paletteId={id}
-                moreToggle={true} />
+                fullPalette />
         });
         return (
             <div className='Palette'>
