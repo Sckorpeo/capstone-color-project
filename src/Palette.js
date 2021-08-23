@@ -5,7 +5,8 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import PaletteFooter from './PaletteFooter';
-import './Palette.css';
+import { withStyles } from '@material-ui/styles';
+import styles from './styles/PaletteStyles';
 
 
 class Palette extends Component {
@@ -37,6 +38,7 @@ class Palette extends Component {
     }
 
     render() {
+        const { classes } = this.props
         const { colors, paletteName, emoji, id } = this.props.palette;
         const { level, format, open } = this.state;
         const colorBoxes = colors[level].map(color => {
@@ -49,14 +51,14 @@ class Palette extends Component {
                 fullPalette />
         });
         return (
-            <div className='Palette'>
+            <div className={classes.Palette}>
                 <Navbar level={level}
                     changeLevel={this.changeLevel}
                     changeFormat={this.changeFormat}
                     format={format}
                     sliderToggle
                 />
-                <div className='Palette-colors'>
+                <div className={classes.colors}>
                     {colorBoxes}
                 </div>
                 <PaletteFooter paletteName={paletteName} emoji={emoji} />
@@ -84,4 +86,4 @@ class Palette extends Component {
     }
 }
 
-export default Palette;
+export default withStyles(styles)(Palette);

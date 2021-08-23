@@ -3,21 +3,24 @@ import { Link } from 'react-router-dom';
 import Slider from 'rc-slider';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import { withStyles } from '@material-ui/styles';
 import 'rc-slider/assets/index.css';
-import './Navbar.css';
+import styles from './styles/NavbarStyles';
+
+
 
 class Navbar extends Component {
 
     render() {
-        const { level, changeLevel, changeFormat, format, sliderToggle } = this.props
+        const { level, changeLevel, changeFormat, format, sliderToggle, classes } = this.props
         return (
-            <nav className='Navbar'>
-                <div className='logo'>
+            <nav className={classes.Navbar}>
+                <div className={classes.logo}>
                     <Link to='/'>reactcolorpicker</Link>
                 </div>
-                {sliderToggle && <div className='slider-container'>
+                {sliderToggle && <div>
                     <span>Level: {level}</span>
-                    <div className='slider'>
+                    <div className={classes.slider}>
                         <Slider
                             defaultValue={level}
                             min={100}
@@ -34,7 +37,7 @@ class Navbar extends Component {
                         />
                     </div>
                 </div>}
-                <div className='select-container'>
+                <div className={classes.selectContainer}>
                     <Select onChange={changeFormat}
                         value={format}>
                         <MenuItem value='hex'>HEX - #ffffff</MenuItem>
@@ -47,4 +50,4 @@ class Navbar extends Component {
     }
 }
 
-export default Navbar;
+export default withStyles(styles)(Navbar);
