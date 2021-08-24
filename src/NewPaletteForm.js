@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function NewPaletteForm() {
+export default function NewPaletteForm(props) {
 
 
     const classes = useStyles();
@@ -84,6 +84,8 @@ export default function NewPaletteForm() {
     const [curColor, setColor] = React.useState('purple');
     const [colorArray, addColor] = React.useState([]);
     const [newName, setName] = React.useState('');
+
+
 
     React.useEffect(() => {
         ValidatorForm.addValidationRule("isNameUnique", value => {
@@ -97,6 +99,18 @@ export default function NewPaletteForm() {
             );
         });
     });
+
+    const savePalette = () => {
+        let newName = 'New test palette'
+        const newPalette = {
+            paletteName: newName,
+            id: newName.toLowerCase().replace(/ /g, '-'),
+            emoji: '',
+            colors: colorArray
+        }
+        props.savePalette(newPalette);
+        props.history.push('/');
+    }
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -130,6 +144,7 @@ export default function NewPaletteForm() {
     return (<div className={classes.root}>
         <CssBaseline />
         <AppBar
+            color='default'
             position="fixed"
             className={clsx(classes.appBar, {
                 [classes.appBarShift]: open,
@@ -148,6 +163,11 @@ export default function NewPaletteForm() {
                 <Typography variant="h6" noWrap>
                     Persistent drawer
                 </Typography>
+                <Button
+                    variant='contained'
+                    color='primary'
+                    onClick={savePalette}
+                >Save Palette</Button>
             </Toolbar>
         </AppBar>
         <Drawer
