@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Button from '@material-ui/core/Button';
+import NewPaletteDialog from './NewPaletteDialog';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
@@ -49,16 +50,10 @@ class PaletteFormNav extends Component {
         this.state = {}
     }
 
-    componentDidMount() {
-        ValidatorForm.addValidationRule("isPaletteNameUnique", value => {
-            return this.props.palettes.every(
-                ({ paletteName }) => paletteName.toLowerCase() !== value.toLowerCase()
-            );
-        });
-    }
+
 
     render() {
-        const { classes, open, newPaletteName, handleDrawerOpen, savePalette, handleNewPaletteName } = this.props
+        const { classes, open, newPaletteName, handleDrawerOpen, savePalette, handleNewPaletteName, palettes } = this.props
         return (<div className={classes.root}>
             <CssBaseline />
             <AppBar
@@ -84,16 +79,13 @@ class PaletteFormNav extends Component {
 
                 </Toolbar>
                 <div className={classes.navBtns}>
-                    <ValidatorForm onSubmit={savePalette}>
-                        <TextValidator
-                            value={newPaletteName}
-                            onChange={handleNewPaletteName}
-                            label='Palette Name'
-                            validators={['required', 'isPaletteNameUnique']}
-                            errorMessages={['This field is required', 'Palette name already taken']}
-                        />
-                    </ValidatorForm>
 
+                    <NewPaletteDialog
+                        newPaletteName={newPaletteName}
+                        handleNewPaletteName={handleNewPaletteName}
+                        savePalette={savePalette}
+                        palettes={palettes}
+                    />
                     <Link to='/'>
                         <Button
                             variant='contained'
@@ -102,11 +94,7 @@ class PaletteFormNav extends Component {
                             Go Back
                         </Button>
                     </Link>
-                    <Button
-                        variant='contained'
-                        color='primary'
-                        onClick={savePalette}
-                    >Save Palette</Button>
+
                 </div>
             </AppBar>
         </div>);
