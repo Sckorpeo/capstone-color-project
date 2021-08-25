@@ -7,8 +7,40 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+
+const drawerWidth = 400;
+
+const styles = (theme) => ({
+    root: {
+        display: 'flex'
+    },
+    appBar: {
+        transition: theme.transitions.create(['margin', 'width'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+
+    },
+    appBarShift: {
+        width: `calc(100% - ${drawerWidth}px)`,
+        marginLeft: drawerWidth,
+        transition: theme.transitions.create(['margin', 'width'], {
+            easing: theme.transitions.easing.easeOut,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    },
+    menuButton: {
+        marginRight: theme.spacing(2),
+    },
+    navBtns: {
+
+    }
+});
 
 
 class PaletteFormNav extends Component {
@@ -16,6 +48,7 @@ class PaletteFormNav extends Component {
         super(props);
         this.state = {}
     }
+
     componentDidMount() {
         ValidatorForm.addValidationRule("isPaletteNameUnique", value => {
             return this.props.palettes.every(
@@ -26,7 +59,7 @@ class PaletteFormNav extends Component {
 
     render() {
         const { classes, open, newPaletteName, handleDrawerOpen, savePalette, handleNewPaletteName } = this.props
-        return (<div>
+        return (<div className={classes.root}>
             <CssBaseline />
             <AppBar
                 color='default'
@@ -46,8 +79,11 @@ class PaletteFormNav extends Component {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap>
-                        Persistent drawer
+                        Create A Palette
                     </Typography>
+
+                </Toolbar>
+                <div className={classes.navBtns}>
                     <ValidatorForm onSubmit={savePalette}>
                         <TextValidator
                             value={newPaletteName}
@@ -57,6 +93,7 @@ class PaletteFormNav extends Component {
                             errorMessages={['This field is required', 'Palette name already taken']}
                         />
                     </ValidatorForm>
+
                     <Link to='/'>
                         <Button
                             variant='contained'
@@ -70,10 +107,10 @@ class PaletteFormNav extends Component {
                         color='primary'
                         onClick={savePalette}
                     >Save Palette</Button>
-                </Toolbar>
+                </div>
             </AppBar>
         </div>);
     }
 }
 
-export default PaletteFormNav;
+export default withStyles(styles, { withTheme: true })(PaletteFormNav);

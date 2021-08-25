@@ -17,23 +17,6 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
     },
-    appBar: {
-        transition: theme.transitions.create(['margin', 'width'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-    },
-    appBarShift: {
-        width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: drawerWidth,
-        transition: theme.transitions.create(['margin', 'width'], {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
     hide: {
         display: 'none',
     },
@@ -43,6 +26,8 @@ const useStyles = makeStyles((theme) => ({
     },
     drawerPaper: {
         width: drawerWidth,
+        display: 'flex',
+        alignItems: 'center'
     },
     drawerHeader: {
         display: 'flex',
@@ -69,12 +54,26 @@ const useStyles = makeStyles((theme) => ({
         }),
         marginLeft: 0,
     },
+    container: {
+        width: '90%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    buttons: {
+        width: '100%'
+    },
+    btn: {
+        width: '50%'
+    }
 }));
 
 export default function NewPaletteForm(props) {
 
     const classes = useStyles();
-    // const theme = useTheme();
+    const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const [colorArray, addColor] = React.useState([]);
     const [newPaletteName, setNewPaletteName] = React.useState('');
@@ -141,7 +140,6 @@ export default function NewPaletteForm(props) {
     return (<div className={classes.root}>
         <PaletteFormNav
             open={open}
-            classes={classes}
             newPaletteName={newPaletteName}
             palettes={props.palettes}
             handleDrawerOpen={handleDrawerOpen}
@@ -164,24 +162,27 @@ export default function NewPaletteForm(props) {
                 </IconButton>
             </div>
             <Divider />
+            <div className={classes.container}>
+                <Typography variant='h4' gutterBottom>Design Your Palette</Typography>
+                <div className={classes.buttons}>
+                    <Button variant='contained' color='secondary'
+                        onClick={handleClear}
+                        className={classes.btn}
+                    >Clear Palette</Button>
+                    <Button variant='contained' color='primary'
+                        onClick={addRandomColor}
+                        disabled={paletteIsFull}
+                        className={classes.btn}
+                    >Random Color</Button>
+                </div>
 
-            <Typography variant='h4'>Design Your Palette</Typography>
-            <div>
-                <Button variant='contained' color='secondary'
-                    onClick={handleClear}
-                >Clear Palette</Button>
-                <Button variant='contained' color='primary'
-                    onClick={addRandomColor}
-                    disabled={paletteIsFull}
-                >Random Color</Button>
+
+                <ColorPickerForm
+                    paletteIsFull={paletteIsFull}
+                    colorArray={colorArray}
+                    handleColorAdd={handleColorAdd}
+                />
             </div>
-
-
-            <ColorPickerForm
-                paletteIsFull={paletteIsFull}
-                colorArray={colorArray}
-                handleColorAdd={handleColorAdd}
-            />
         </Drawer>
         <main
             className={clsx(classes.content, {
