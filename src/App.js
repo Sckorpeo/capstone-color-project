@@ -36,7 +36,9 @@ class App extends Component {
     // const palette = generatePalette(seedColors[4]);
     return (
       <Switch>
-        <Route exact path='/palette/new' render={(routeProps) => <NewPaletteForm savePalette={this.savePalette}
+        <Route exact path='/palette/new' render={(routeProps) => <NewPaletteForm
+          palettes={this.state.palettes}
+          savePalette={this.savePalette}
           {...routeProps} />} />
         <Route exact
           path={'/palette/:paletteId/:colorId'}

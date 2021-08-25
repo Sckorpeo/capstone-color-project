@@ -84,6 +84,7 @@ export default function NewPaletteForm(props) {
     const [curColor, setColor] = React.useState('purple');
     const [colorArray, addColor] = React.useState([]);
     const [newName, setName] = React.useState('');
+    const [newPaletteName, setNewPaletteName] = React.useState('');
 
 
 
@@ -98,10 +99,15 @@ export default function NewPaletteForm(props) {
                 ({ color }) => color !== curColor
             );
         });
+        ValidatorForm.addValidationRule("isPaletteNameUnique", value => {
+            return props.palettes.every(
+                ({ paletteName }) => paletteName.toLowerCase() !== value.toLowerCase()
+            );
+        });
     });
 
     const savePalette = () => {
-        let newName = 'New test palette'
+        let newName = newPaletteName;
         const newPalette = {
             paletteName: newName,
             id: newName.toLowerCase().replace(/ /g, '-'),
@@ -140,6 +146,13 @@ export default function NewPaletteForm(props) {
     const handleChange = (evt) => {
         setName(evt.target.value)
     }
+    const handleNewPaletteName = (evt) => {
+        setNewPaletteName(evt.target.value)
+    }
+
+    const removeColor = (colorName) => {
+        addColor(colorArray.filter(color => color.name !== colorName))
+    }
 
     return (<div className={classes.root}>
         <CssBaseline />
@@ -163,6 +176,15 @@ export default function NewPaletteForm(props) {
                 <Typography variant="h6" noWrap>
                     Persistent drawer
                 </Typography>
+                <ValidatorForm onSubmit={savePalette}>
+                    <TextValidator
+                        value={newPaletteName}
+                        onChange={handleNewPaletteName}
+                        label='Palette Name'
+                        validators={['required', 'isPaletteNameUnique']}
+                        errorMessages={['This field is required', 'Palette name already taken']}
+                    />
+                </ValidatorForm>
                 <Button
                     variant='contained'
                     color='primary'
@@ -222,7 +244,11 @@ export default function NewPaletteForm(props) {
             <div className={classes.drawerHeader} />
 
             {colorArray.map(color => (
-                <DraggableColorBox color={color.color} name={color.name} />
+                <DraggableColorBox color={color.color}
+                    name={color.name}
+                    handleDelete={() => removeColor(color.name)}
+                    key={color.name}
+                />
             ))}
 
 
