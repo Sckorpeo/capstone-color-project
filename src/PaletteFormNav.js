@@ -25,6 +25,7 @@ const styles = (theme) => ({
         }),
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center'
 
     },
     appBarShift: {
@@ -39,7 +40,13 @@ const styles = (theme) => ({
         marginRight: theme.spacing(2),
     },
     navBtns: {
-
+        marginRight: '1rem'
+    },
+    button: {
+        margin: '0 0.5rem',
+    },
+    link: {
+        textDecoration: 'none'
     }
 });
 
@@ -47,7 +54,13 @@ const styles = (theme) => ({
 class PaletteFormNav extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            formShowing: false
+        }
+        this.showForm = this.showForm.bind(this);
+    }
+    showForm() {
+        this.setState({ formShowing: true })
     }
 
 
@@ -80,23 +93,31 @@ class PaletteFormNav extends Component {
                 </Toolbar>
                 <div className={classes.navBtns}>
 
-                    <NewPaletteDialog
-                        newPaletteName={newPaletteName}
-                        handleNewPaletteName={handleNewPaletteName}
-                        savePalette={savePalette}
-                        palettes={palettes}
-                    />
-                    <Link to='/'>
+
+                    <Link to='/' className={classes.link}>
                         <Button
                             variant='contained'
                             color='secondary'
+                            className={classes.button}
                         >
                             Go Back
                         </Button>
                     </Link>
+                    <Button variant="contained" color="primary" onClick={this.showForm}
+                        className={classes.button}>
+
+                        Save Palette
+                    </Button>
 
                 </div>
+
             </AppBar>
+            {this.state.formShowing && (<NewPaletteDialog
+                newPaletteName={newPaletteName}
+                handleNewPaletteName={handleNewPaletteName}
+                savePalette={savePalette}
+                palettes={palettes}
+            />)}
         </div>);
     }
 }
