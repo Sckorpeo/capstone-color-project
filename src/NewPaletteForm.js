@@ -11,7 +11,8 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Button from '@material-ui/core/Button';
-import DraggableColorBox from './DraggableColorBox';
+import DraggableColorList from './DraggableColorList';
+import { arrayMove } from 'react-sortable-hoc';
 import { ChromePicker } from 'react-color';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
@@ -154,6 +155,12 @@ export default function NewPaletteForm(props) {
         addColor(colorArray.filter(color => color.name !== colorName))
     }
 
+    const onSortEnd = ({ oldIndex, newIndex }) => {
+        addColor(
+            arrayMove(colorArray, oldIndex, newIndex)
+        );
+    }
+
     return (<div className={classes.root}>
         <CssBaseline />
         <AppBar
@@ -243,13 +250,12 @@ export default function NewPaletteForm(props) {
         >
             <div className={classes.drawerHeader} />
 
-            {colorArray.map(color => (
-                <DraggableColorBox color={color.color}
-                    name={color.name}
-                    handleDelete={() => removeColor(color.name)}
-                    key={color.name}
-                />
-            ))}
+            <DraggableColorList
+                colorArray={colorArray}
+                removeColor={removeColor}
+                axis='xy'
+                onSortEnd={onSortEnd}
+            />
 
 
         </main>
