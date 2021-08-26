@@ -28,7 +28,7 @@ export default function NewPaletteDialog(props) {
         });
     });
 
-    const { newPaletteName, handleNewPaletteName, savePalette, hideForm } = props;
+    const { newPaletteName, handleNewPaletteName, hideForm } = props;
 
     return (
         <div>

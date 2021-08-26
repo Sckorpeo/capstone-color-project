@@ -6,7 +6,7 @@ import styles from './styles/DraggableColorBoxStyles';
 
 
 const DraggableColorBox = SortableElement((props) => {
-    const { classes, handleDelete, name, color } = props;
+    const { classes, handleDelete, color } = props;
     return (<div
         className={classes.root}
         style={{ backgroundColor: color }}

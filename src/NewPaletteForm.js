@@ -88,7 +88,6 @@ export default function NewPaletteForm(props) {
             handleDrawerOpen={handleDrawerOpen}
             savePalette={savePalette}
             handleNewPaletteName={handleNewPaletteName}
-            savePalette={savePalette}
         />
         <Drawer
             className={classes.drawer}
