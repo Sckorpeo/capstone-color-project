@@ -10,45 +10,7 @@ import Button from '@material-ui/core/Button';
 import NewPaletteDialog from './NewPaletteDialog';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-
-const drawerWidth = 400;
-
-const styles = (theme) => ({
-    root: {
-        display: 'flex'
-    },
-    appBar: {
-        transition: theme.transitions.create(['margin', 'width'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-
-    },
-    appBarShift: {
-        width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: drawerWidth,
-        transition: theme.transitions.create(['margin', 'width'], {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
-    navBtns: {
-        marginRight: '1rem'
-    },
-    button: {
-        margin: '0 0.5rem',
-    },
-    link: {
-        textDecoration: 'none'
-    }
-});
+import styles from './styles/PaletteFormNavStyles';
 
 
 class PaletteFormNav extends Component {
@@ -66,8 +28,6 @@ class PaletteFormNav extends Component {
     hideForm() {
         this.setState({ formShowing: false })
     }
-
-
 
     render() {
         const { classes, open, newPaletteName, handleDrawerOpen, savePalette, handleNewPaletteName, palettes } = this.props
@@ -93,11 +53,8 @@ class PaletteFormNav extends Component {
                     <Typography variant="h6" noWrap>
                         Create A Palette
                     </Typography>
-
                 </Toolbar>
                 <div className={classes.navBtns}>
-
-
                     <Link to='/' className={classes.link}>
                         <Button
                             variant='contained'
@@ -112,9 +69,7 @@ class PaletteFormNav extends Component {
 
                         Save Palette
                     </Button>
-
                 </div>
-
             </AppBar>
             {this.state.formShowing && (<NewPaletteDialog
                 newPaletteName={newPaletteName}
