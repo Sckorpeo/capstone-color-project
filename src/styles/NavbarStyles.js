@@ -1,3 +1,4 @@
+import { down } from './size';
 const styles = {
     Navbar: {
         display: 'flex',
@@ -28,6 +29,9 @@ const styles = {
         width: '340px',
         margin: '0 10px',
         display: 'inline-block',
+        [down('sm')]: {
+            display: 'none'
+        }
     }
 }
 
