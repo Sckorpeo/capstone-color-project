@@ -80,12 +80,12 @@ export default function NewPaletteForm(props) {
 
     let paletteIsFull = colorArray.length >= 20;
 
-    const savePalette = () => {
+    const savePalette = (emoji) => {
         let newName = newPaletteName;
         const newPalette = {
             paletteName: newName,
             id: newName.toLowerCase().replace(/ /g, '-'),
-            emoji: '',
+            emoji,
             colors: colorArray
         }
         props.savePalette(newPalette);
