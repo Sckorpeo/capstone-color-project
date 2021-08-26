@@ -17,7 +17,7 @@ import { arrayMove } from 'react-sortable-hoc';
 export default function NewPaletteForm(props) {
 
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
     const [colorArray, addColor] = React.useState([]);
     const [newPaletteName, setNewPaletteName] = React.useState('');
 
