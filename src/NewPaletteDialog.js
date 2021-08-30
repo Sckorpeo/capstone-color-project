@@ -17,7 +17,8 @@ export default function NewPaletteDialog(props) {
         setStage('emoji')
     }
     const saveThePalette = ({ native }) => {
-        props.savePalette(native)
+        props.savePalette(native);
+        setStage('');
     }
 
     useEffect(() => {

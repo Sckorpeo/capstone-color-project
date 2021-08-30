@@ -63,7 +63,7 @@ class PaletteList extends Component {
                                 timeout={500}
                             >
                                 <MiniPalette {...p}
-                                    handleClick={() => this.goToPalette(p.id)}
+                                    handleClick={this.goToPalette}
                                     deletePalette={this.openDialog}
                                     key={p.id}
                                 />
