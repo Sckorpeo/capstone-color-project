@@ -1,5 +1,4 @@
 
-import './App.css';
 import React, { Component } from 'react';
 import Palette from './Palette';
 import seedColors from './seedColors';
@@ -8,6 +7,7 @@ import { Switch, Route } from 'react-router-dom';
 import PaletteList from './PaletteList';
 import SingleColorPalette from './SingleColorPalette';
 import NewPaletteForm from './NewPaletteForm';
+import ErrorBoundary from './ErrorBoundary';
 import Page from './Page';
 import {
   CSSTransition,
@@ -88,12 +88,16 @@ class App extends Component {
                   <Palette palette={generatePalette(this.findPalette(routeProps.match.params.id))} />
                 </Page>}
               />
+              <Route render={(routeProps) =>
+                <Page>
+                  <PaletteList palettes={this.state.palettes} {...routeProps} deletePalette={this.deletePalette} />
+                </Page>}
+              />
 
             </Switch>
           </CSSTransition>
         </TransitionGroup>
       )} />
-
     );
   }
 
