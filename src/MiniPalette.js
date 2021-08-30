@@ -19,7 +19,6 @@ class MiniPalette extends PureComponent {
                 key={c.name}
             ></div>
         ));
-        console.log('Rerendeing:', paletteName)
         return (
             <div className={classes.root} onClick={() => handleClick(id)}>
                 <Delete className={classes.deleteIcon}
